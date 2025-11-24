@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Catálogo - Mi Local</title>
+    <title>Editar Catálogo - JULISALO</title>
     
     <!-- FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
@@ -24,16 +24,17 @@
         const db = getFirestore(app);
         
         window.firebaseDB = db;
-        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc };
+        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc };
     </script>
     <link rel="stylesheet" href="EditCatalogo.css">
+
 </head>
 <body>
     <!-- Encabezado -->
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="../admin/admin.html" class="back-btn">← Volver</a>
+                <a href="admin.html" class="back-btn">← Volver</a>
                 <div class="admin-badge">Editando Catálogo</div>
             </div>
         </div>
@@ -106,7 +107,12 @@
                 <label class="form-label">Cantidad Disponible</label>
                 <input type="number" class="form-input" id="productStock" placeholder="0" min="0">
             </div>
+            <div class="form-group">
+                <label class="form-label">Cantidad Disponible</label>
+                <input type="number" class="form-input" id="productStock" placeholder="0" min="0">
+            </div>
             
+            <!-- ESTE ES EL BLOCO NUEVO QUE AGREGAS -->
             <div class="form-group">
                 <label class="form-label">Categoría</label>
                 <select class="form-input" id="productCategory">
@@ -114,7 +120,7 @@
                     <option value="cacharreria">Cacharrería</option>
                     <option value="telefonos">Teléfonos</option>
                     <option value="accesorios">Accesorios</option>
-                    <option value="ofertas">Ofertas</option>
+                    <option value="ofertas">Papeleria</option>
                 </select>
             </div>
             
@@ -126,6 +132,17 @@
     </div>
 
     <script src="EditCatalogo.js"></script>
+    <footer>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+    </footer>
 </body>
 </html>
 
