@@ -6,6 +6,7 @@
     <title>Editar Catálogo - JULISALO</title>
     
     <!-- FIREBASE -->
+<!-- FIREBASE -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
@@ -23,8 +24,15 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     
+    // GUARDAR LAS FUNCIONES DIRECTAMENTE EN window
     window.firebaseDB = db;
-    window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc };
+    window.firebaseCollection = collection;
+    window.firebaseAddDoc = addDoc;
+    window.firebaseGetDocs = getDocs;
+    window.firebaseUpdateDoc = updateDoc;
+    window.firebaseDeleteDoc = deleteDoc;
+    window.firebaseDoc = doc;
+    window.firebaseGetDoc = getDoc; // ← ESTA ES LA IMPORTANTE
 </script>
     <link rel="stylesheet" href="EditCatalogo.css">
 
@@ -146,3 +154,4 @@
 </body>
 
 </html>
+
