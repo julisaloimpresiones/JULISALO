@@ -25,7 +25,7 @@ async function loadProductsFromFirebase() {
         renderProducts(products);
     } catch (error) {
         console.error("Error cargando productos:", error);
-        alert("Error al cargar productos");
+        alert("Error al cargar productos: " + error.message);
     }
 }
 
@@ -48,7 +48,7 @@ function renderProducts(products) {
                 <div class="product-name">${product.nombre}</div>
                 <div class="product-price">$${product.precio.toFixed(2)}</div>
                 <div class="product-stock">Disponible: ${product.stock} unidades</div>
-                <div class="product-description" style="font-size: 14px; color: #666; margin-top: 8px;">${product.descripcion}</div>
+                <div class="product-description">${product.descripcion}</div>
             </div>
             <div class="product-actions">
                 <button class="edit-btn" onclick="editProduct('${product.id}')">Editar</button>
@@ -128,7 +128,7 @@ async function editProduct(id) {
         }
     } catch (error) {
         console.error("Error editando producto:", error);
-        alert("Error al cargar producto para editar");
+        alert("Error al cargar producto para editar: " + error.message);
     }
 }
 
@@ -144,7 +144,7 @@ async function deleteProduct(id) {
             alert("Producto eliminado correctamente");
         } catch (error) {
             console.error("Error eliminando producto:", error);
-            alert("Error al eliminar producto");
+            alert("Error al eliminar producto: " + error.message);
         }
     }
 }
@@ -178,10 +178,8 @@ async function saveProduct() {
         };
         
         if (editingProductId) {
-            // Actualizar producto existente
             await updateDoc(doc(db, "productos", editingProductId), productData);
         } else {
-            // Agregar nuevo producto
             await addDoc(collection(db, "productos"), productData);
         }
         
@@ -191,7 +189,7 @@ async function saveProduct() {
         
     } catch (error) {
         console.error("Error guardando producto:", error);
-        alert("Error al guardar producto");
+        alert("Error al guardar producto: " + error.message);
     }
 }
 
@@ -206,3 +204,4 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
