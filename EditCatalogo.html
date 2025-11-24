@@ -8,7 +8,7 @@
     <!-- FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
@@ -24,7 +24,7 @@
         const db = getFirestore(app);
         
         window.firebaseDB = db;
-        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc };
+        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc};
     </script>
     <link rel="stylesheet" href="EditCatalogo.css">
 
@@ -145,6 +145,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
