@@ -98,39 +98,54 @@ let editingProductId = null;
             }
         }
         
-        // Editar producto existente
-        async function editProduct(id) {
-            try {
-                const db = window.firebaseDB;
-                const { doc, getDoc } = window.firebaseFunctions;
-                
-                const productDoc = await getDoc(doc(db, "productos", id));
-                
-                if (productDoc.exists()) {
-                    const product = productDoc.data();
-                    editingProductId = id;
-                    
-                    document.getElementById('modalTitle').textContent = 'Editar Producto';
-                    document.getElementById('productName').value = product.nombre;
-                    document.getElementById('productDescription').value = product.descripcion;
-                    document.getElementById('productPrice').value = product.precio;
-                    document.getElementById('productStock').value = product.stock;
-                    document.getElementById('imageUrl').value = product.imagen || '';
-                    document.getElementById('productCategory').value = product.categoria || '';
-                    
-                    if (product.imagen) {
-                        previewImageUrl(product.imagen);
-                    } else {
-                        document.getElementById('imagePreview').innerHTML = '📷 Ingresa una URL para ver la vista previa';
-                    }
-                    
-                    document.getElementById('productModal').style.display = 'flex';
-                }
-            } catch (error) {
-                console.error("Error editando producto:", error);
-                alert("Error al cargar producto para editar");
-            }
+        // Editar producto existente - VERSIÓN MEJORADA
+async function editProduct(id) {
+    try {
+        console.log("🔍 Intentando editar producto:", id);
+        
+        // Verificar que Firebase esté disponible
+        if (!window.firebaseDB || !window.firebaseFunctions) {
+            throw new Error("Firebase no está configurado. Recarga la página.");
         }
+
+        const db = window.firebaseDB;
+        const { doc, getDoc } = window.firebaseFunctions;
+        
+        console.log("📦 Obteniendo documento...");
+        const productDoc = await getDoc(doc(db, "productos", id));
+        
+        if (productDoc.exists()) {
+            const product = productDoc.data();
+            console.log("✅ Producto encontrado:", product);
+            
+            editingProductId = id;
+            
+            // Llenar el formulario
+            document.getElementById('modalTitle').textContent = 'Editar Producto';
+            document.getElementById('productName').value = product.nombre || '';
+            document.getElementById('productDescription').value = product.descripcion || '';
+            document.getElementById('productPrice').value = product.precio || '';
+            document.getElementById('productStock').value = product.stock || '';
+            document.getElementById('productCategory').value = product.categoria || '';
+            document.getElementById('imageUrl').value = product.imagen || '';
+            
+            if (product.imagen) {
+                previewImageUrl(product.imagen);
+            } else {
+                document.getElementById('imagePreview').innerHTML = '📷 Ingresa una URL para ver la vista previa';
+            }
+            
+            document.getElementById('productModal').style.display = 'flex';
+            
+        } else {
+            throw new Error("El producto no existe en la base de datos");
+        }
+        
+    } catch (error) {
+        console.error("❌ Error editando producto:", error);
+        alert("Error al cargar producto para editar: " + error.message);
+    }
+}
         
         // Eliminar producto
         async function deleteProduct(id) {
