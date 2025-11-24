@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - JULISALO</title>
+    
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+            authDomain: "julisalo.firebaseapp.com",
+            projectId: "julisalo",
+            storageBucket: "julisalo.firebasestorage.app",
+            messagingSenderId: "770420740812",
+            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+            measurementId: "G-BT8MHDK807"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.firebaseDB = db;
+        window.firebaseFunctions = { doc, getDoc };
+    </script>
+    <link rel="stylesheet" href="contacto.css">
+</head>
+<body>
+    <!-- Notificación de copiado -->
+    <div class="copy-notification" id="copyNotification">
+        ¡Email copiado al portapapeles!
+    </div>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">← Volver al Inicio</a>
+                <a href="registro.html" class="login-btn">Iniciar Sesión</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Logo -->
+    <section class="logo-section">
+        <div class="container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/NjdrTZQv/Whats-App-Image-2025-11-16-at-12-58-11-PM-removebg-preview.png" alt="Logo Mi Local">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Título -->
+    <section class="contact-title-section">
+        <div class="container">
+            <h1 class="contact-title">Contáctanos</h1>
+            <p class="contact-subtitle">Estamos aquí para ayudarte</p>
+        </div>
+    </section>
+    
+    <!-- Contactos -->
+    <section class="contact-container">
+        <div class="container">
+            <div class="contact-box">
+                <div id="loadingContacts" class="loading">🔄 Cargando información de contacto...</div>
+                
+                <!-- Gmail -->
+                <div class="contact-method" onclick="copyEmail()" id="emailContact" style="display: none;">
+                    <div class="contact-icon gmail-icon">
+                        ✉️
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-name">Correo Electrónico</div>
+                        <div class="contact-detail" id="emailDetail">julisaloimpresiones@gmail.com</div>
+                        <div class="contact-description">Haz clic para copiar el email</div>
+                    </div>
+                </div>
+                
+                <!-- WhatsApp -->
+                <a href="#" class="contact-method" id="whatsappContact" style="display: none;">
+                    <div class="contact-icon whatsapp-icon">
+                        💬
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-name">WhatsApp</div>
+                        <div class="contact-detail" id="whatsappDetail">+57 320 718 1879</div>
+                        <div class="contact-description">Chatea con nosotros directamente</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Mi Local. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentEmail = '';
+        let currentWhatsApp = '';
+        
+        // Cargar contactos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContactsFromFirebase();
+        });
+        
+        // CARGAR contactos desde Firebase
+        async function loadContactsFromFirebase() {
+            try {
+                const db = window.firebaseDB;
+                const { doc, getDoc } = window.firebaseFunctions;
+                
+                const contactDoc = await getDoc(doc(db, "contactos", "info"));
+                
+                // Ocultar loading
+                document.getElementById('loadingContacts').style.display = 'none';
+                
+                if (contactDoc.exists()) {
+                    const contactData = contactDoc.data();
+                    currentEmail = contactData.email || 'julisaloimpresiones@gmail.com';
+                    currentWhatsApp = contactData.whatsapp || '+573207181879';
+                    
+                    // Mostrar contactos
+                    showContacts(currentEmail, currentWhatsApp);
+                } else {
+                    // Usar valores por defecto si no hay datos en Firebase
+                    currentEmail = 'julisaloimpresiones@gmail.com';
+                    currentWhatsApp = '+573207181879';
+                    showContacts(currentEmail, currentWhatsApp);
+                }
+                
+            } catch (error) {
+                console.error("Error cargando contactos:", error);
+                document.getElementById('loadingContacts').innerHTML = '❌ Error al cargar contactos';
+                
+                // Mostrar valores por defecto en caso de error
+                currentEmail = 'julisaloimpresiones@gmail.com';
+                currentWhatsApp = '+573207181879';
+                showContacts(currentEmail, currentWhatsApp);
+            }
+        }
+        
+        // Mostrar contactos en pantalla
+        function showContacts(email, whatsapp) {
+            // Formatear WhatsApp para mostrar
+            const formattedWhatsApp = formatPhoneNumber(whatsapp);
+            
+            // Actualizar email
+            document.getElementById('emailDetail').textContent = email;
+            document.getElementById('emailContact').style.display = 'flex';
+            
+            // Actualizar WhatsApp
+            document.getElementById('whatsappDetail').textContent = formattedWhatsApp;
+            const whatsappLink = document.getElementById('whatsappContact');
+            whatsappLink.href = `https://wa.me/${whatsapp.replace(/\D/g, '')}`;
+            whatsappLink.style.display = 'flex';
+        }
+        
+        // Formatear número de teléfono para mostrar
+        function formatPhoneNumber(phone) {
+            const cleanNumber = phone.replace(/\D/g, '');
+            if (cleanNumber.length === 12) { // +57 format
+                return `+${cleanNumber.substring(0,2)} ${cleanNumber.substring(2,5)} ${cleanNumber.substring(5,8)} ${cleanNumber.substring(8)}`;
+            } else if (cleanNumber.length === 11) { // +1 format
+                return `+${cleanNumber.substring(0,1)} ${cleanNumber.substring(1,4)} ${cleanNumber.substring(4,7)} ${cleanNumber.substring(7)}`;
+            }
+            return phone;
+        }
+        
+        // Copiar email al portapapeles
+        function copyEmail() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(currentEmail)
+                    .then(() => {
+                        showNotification('¡Email copiado al portapapeles!');
+                    })
+                    .catch(err => {
+                        // Fallback para navegadores antiguos
+                        const textArea = document.createElement('textarea');
+                        textArea.value = currentEmail;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        showNotification('¡Email copiado al portapapeles!');
+                    });
+            } else {
+                // Fallback para navegadores muy antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = currentEmail;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('¡Email copiado al portapapeles!');
+            }
+        }
+        
+        // Mostrar notificación
+        function showNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Recargar contactos cada 30 segundos (opcional)
+        setInterval(() => {
+            loadContactsFromFirebase();
+        }, 30000);
+    </script>
+    <footer style="
+    background: #5C0667;
+    color: #dfe6e9;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  ">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+        
+        <!-- Encabezado del Footer -->
+        <div style="margin-bottom: 25px;">
+            <h2 style="color: #e17055; margin: 0 0 10px 0; font-size: 32px;">
+                JULISALO
+            </h2>
+            <p style="margin: 0; font-size: 18px; color: #81ecec;">
+                Más Cerca de Tí
+            </p>
+        </div>
+  
+        <!-- Información en columnas -->
+        <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin: 30px 0;">
+            <div style="text-align: left;">
+                <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📍 Nuestro Local</h4>
+                <p style="margin: 5px 0;">✅ Productos de calidad</p>
+                <p style="margin: 5px 0;">✅ Atención personalizada</p>
+                <p style="margin: 5px 0;">✅ Precios competitivos</p>
+            </div>
+            
+            <div style="text-align: left;">
+                <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📞 Contáctanos</h4>
+                <p style="margin: 5px 0;">🏪 Visítanos Cuando Puedas</p>
+                <p style="margin: 5px 0;">⭐ Cientos de Clientes Felices</p>
+            </div>
+        </div>
+        <!-- Copyright -->
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Local Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+  </footer>
+</body>
+</html>

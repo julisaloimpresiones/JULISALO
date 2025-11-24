@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">← Volver </a>
+                <div id="userStatus"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Logo -->
+    <section class="logo-section">
+        <div class="container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/NjdrTZQv/Whats-App-Image-2025-11-16-at-12-58-11-PM-removebg-preview.png">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Formulario de login -->
+    <section class="login-container" id="loginSection">
+        <div class="login-box">
+            <h2 class="login-title">Acceso Administrativo</h2>
+            
+            <div class="security-notice">
+                <strong>Acceso Restringido:</strong> Esta área es solo para personal autorizado. 
+                Todas las actividades son registradas.
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuario autorizado</label>
+                    <input type="text" id="username" class="form-input" placeholder="Ingresa tu usuario" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña de acceso</label>
+                    <input type="password" id="password" class="form-input" placeholder="Ingresa tu contraseña" required>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">Verificar Identidad</button>
+                
+                <div class="error-message" id="errorMessage">
+                    Credenciales incorrectas. Por favor, inténtalo de nuevo.
+                </div>
+                
+                <div class="attempts-counter" id="attemptsCounter">
+                    Intentos restantes: <span id="attemptsLeft">3</span>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Panel de administración (solo visible después del login) -->
+    <section class="admin-panel" id="adminPanel">
+        <div class="container">
+            <h2 class="admin-title">Panel de Administración</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Bienvenido al área administrativa de JULISALO</p>
+            
+            <div class="admin-options">
+                <div class="admin-option" onclick="alert('Funcionalidad: Gestionar precios')">
+                    <h3>Gestionar Precios</h3>
+                    <p>Actualizar precios de productos y servicios</p>
+                </div>
+                
+                <div class="admin-option" onclick="alert('Funcionalidad: Ver reportes')">
+                    <h3>Ver Reportes</h3>
+                    <p>Consultar reportes de ventas y estadísticas</p>
+                </div>
+                
+                <div class="admin-option" onclick="alert('Funcionalidad: Gestionar inventario')">
+                    <h3>Gestionar Inventario</h3>
+                    <p>Controlar stock y productos disponibles</p>
+                </div>
+                
+                <div class="admin-option" onclick="alert('Funcionalidad: Configurar sistema')">
+                    <h3>Configuración</h3>
+                    <p>Ajustes del sistema y preferencias</p>
+                </div>
+            </div>
+            
+            <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+  </footer>
+    <script src="registro.js"></script>
+</body>
+</html>

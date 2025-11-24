@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Catálogo - JULISALO</title>
+    
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+            authDomain: "julisalo.firebaseapp.com",
+            projectId: "julisalo",
+            storageBucket: "julisalo.firebasestorage.app",
+            messagingSenderId: "770420740812",
+            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+            measurementId: "G-BT8MHDK807"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.firebaseDB = db;
+        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc };
+    </script>
+    <link rel="stylesheet" href="EditCatalogo.css">
+
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="admin.html" class="back-btn">← Volver</a>
+                <div class="admin-badge">Editando Catálogo</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Título -->
+    <section>
+        <div class="container">
+            <h1 class="page-title">Gestión de Catálogo</h1>
+        </div>
+    </section>
+    
+    <!-- Controles -->
+    <section>
+        <div class="container">
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
+                </div>
+                <button class="add-product-btn" onclick="openAddModal()">+ Agregar Producto</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Grid de productos -->
+    <section>
+        <div class="container">
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se cargarán aquí desde Firebase -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal para agregar/editar producto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">Agregar Nuevo Producto</h3>
+            
+            <div class="form-group">
+                <label class="form-label">URL de la Imagen</label>
+                <input type="url" class="form-input" id="imageUrl" placeholder="https://ejemplo.com/imagen-producto.jpg" oninput="previewImageUrl(this.value)">
+                <div class="url-help">
+                    Puedes usar imágenes de: 
+                    <a href="https://unsplash.com" target="_blank">Unsplash</a>, 
+                    <a href="https://pexels.com" target="_blank">Pexels</a>
+                    o subir tus imágenes a un servicio como 
+                    <a href="https://imgbb.com" target="_blank">ImgBB</a>
+                </div>
+                <div class="image-upload">
+                    <div id="imagePreview">📷 Ingresa una URL para ver la vista previa</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nombre del Producto</label>
+                <input type="text" class="form-input" id="productName" placeholder="Ej: Smartphone Samsung Galaxy">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-textarea" id="productDescription" placeholder="Describe el producto..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Precio ($)</label>
+                <input type="number" class="form-input" id="productPrice" placeholder="0.00" step="0.01" min="0">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Cantidad Disponible</label>
+                <input type="number" class="form-input" id="productStock" placeholder="0" min="0">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Cantidad Disponible</label>
+                <input type="number" class="form-input" id="productStock" placeholder="0" min="0">
+            </div>
+            
+            <!-- ESTE ES EL BLOCO NUEVO QUE AGREGAS -->
+            <div class="form-group">
+                <label class="form-label">Categoría</label>
+                <select class="form-input" id="productCategory">
+                    <option value="">Seleccionar categoría</option>
+                    <option value="cacharreria">Cacharrería</option>
+                    <option value="telefonos">Teléfonos</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="ofertas">Papeleria</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="btn-save" onclick="saveProduct()">Guardar Producto</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="EditCatalogo.js"></script>
+    <footer>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+    </footer>
+</body>
+</html>

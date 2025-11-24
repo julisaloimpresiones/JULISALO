@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Contactos - JULISALO</title>
+    
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+            authDomain: "julisalo.firebaseapp.com",
+            projectId: "julisalo",
+            storageBucket: "julisalo.firebasestorage.app",
+            messagingSenderId: "770420740812",
+            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+            measurementId: "G-BT8MHDK807"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.firebaseDB = db;
+        window.firebaseFunctions = { doc, getDoc, setDoc };
+    </script>
+    <link rel="stylesheet" href="Editcontactos.css">
+</head>
+<body>
+    <!-- Notificación -->
+    <div class="notification" id="notification">
+        ¡Cambios guardados exitosamente!
+    </div>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="admin.html" class="back-btn">← Volver al Panel</a>
+                <div class="admin-badge">Editando Contactos</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Título -->
+    <section>
+        <div class="container">
+            <h1 class="page-title">Gestión de Contactos</h1>
+        </div>
+    </section>
+    
+    <!-- Formulario de contactos -->
+    <section class="contact-container">
+        <div class="container">
+            <div class="contact-box">
+                <!-- Gmail -->
+                <div class="contact-method">
+                    <div class="contact-icon gmail-icon">
+                        ✉️
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-name">Correo Electrónico</div>
+                        <input type="email" class="contact-input" id="emailInput" placeholder="ejemplo@gmail.com">
+                        <div class="contact-description">Correo principal para consultas de clientes</div>
+                        <button class="btn-test" onclick="testEmail()">📧 Probar enlace</button>
+                    </div>
+                </div>
+                
+                <!-- WhatsApp -->
+                <div class="contact-method">
+                    <div class="contact-icon whatsapp-icon">
+                        💬
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-name">WhatsApp Business</div>
+                        <input type="text" class="contact-input" id="whatsappInput" placeholder="+1 234 567 890">
+                        <div class="contact-description">Número para WhatsApp Business con código de país</div>
+                        <button class="btn-test" onclick="testWhatsApp()">📱 Probar enlace</button>
+                    </div>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button class="btn-cancel" onclick="cancelChanges()">Cancelar</button>
+                    <button class="btn-save" onclick="saveContacts()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+    </footer>
+
+    <script src="EditContactos.js"></script>
+</body>
+</html>

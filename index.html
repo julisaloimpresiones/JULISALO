@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JULISALO</title>
+    <link rel="stylesheet" href="Inicio.css">
+</head>
+<body>
+        <!-- Encabezado -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <a href="registro.html">
+                    <button class="login-btn">Iniciar Sesión</button>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <section class="logo-section">
+            <div class="container">
+                <div class="logo">
+                   <img src="https://i.postimg.cc/NjdrTZQv/Whats-App-Image-2025-11-16-at-12-58-11-PM-removebg-preview.png">
+                </div>
+            </div>
+        </section>
+        <section class="main-buttons-section">
+            <div class="container">
+                <div class="main-buttons">
+                    <a href="catalogo.html" class="main-btn">
+                        <div class="btn-icon">📋</div>
+                        <div class="btn-title">Catálogo</div>
+                    </a>
+                    
+                    <a href="contacto.html" class="main-btn">
+                        <div class="btn-icon">📞</div>
+                        <div class="btn-title">Contacto</div>
+                    </a>
+                    
+                    <a href="horario.html" class="main-btn">
+                        <div class="btn-icon">🛒</div>
+                        <div class="btn-title">horarios</div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+      authDomain: "julisalo.firebaseapp.com",
+      projectId: "julisalo",
+      storageBucket: "julisalo.firebasestorage.app",
+      messagingSenderId: "770420740812",
+      appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+      measurementId: "G-BT8MHDK807"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+<footer style="
+  background: #5C0667;
+  color: #dfe6e9;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+">
+  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      
+      <!-- Encabezado del Footer -->
+      <div style="margin-bottom: 25px;">
+          <h2 style="color: #e17055; margin: 0 0 10px 0; font-size: 32px;">
+              JULISALO
+          </h2>
+          <p style="margin: 0; font-size: 18px; color: #81ecec;">
+            Más cerca de ti 
+          </p>
+      </div>
+
+      <!-- Información en columnas -->
+      <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin: 30px 0;">
+          <div style="text-align: left;">
+              <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📍 Nuestro Local</h4>
+              <p style="margin: 5px 0;">✅ Productos de calidad</p>
+              <p style="margin: 5px 0;">✅ Atención personalizada</p>
+              <p style="margin: 5px 0;">✅ Precios competitivos</p>
+          </div>
+          
+          <div style="text-align: left;">
+              <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📞 Contáctanos</h4>
+              <p style="margin: 5px 0;">🏪 Visítanos Cuando Puedas</p>
+              <p style="margin: 5px 0;">⭐ Cientos de Clientes Felices</p>
+          </div>
+      </div>
+      <!-- Copyright -->
+      <div style=" background-color: #5C0667; margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+          <p style="margin: 0; font-size: 14px;">
+              <strong>Julisalo</strong> • Desarrollado por <strong style="color: #fff;"> IG: @T4po.0</strong>
+          </p>
+          <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+              &copy; 2025 - sencillez con   Facilidad
+          </p>
+      </div>
+  </div>
+</footer>
+</html>

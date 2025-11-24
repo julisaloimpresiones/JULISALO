@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios - JULISALO</title>
+    
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+            authDomain: "julisalo.firebaseapp.com",
+            projectId: "julisalo",
+            storageBucket: "julisalo.firebasestorage.app",
+            messagingSenderId: "770420740812",
+            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+            measurementId: "G-BT8MHDK807"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.firebaseDB = db;
+        window.firebaseFunctions = { doc, getDoc };
+    </script>
+    <link rel="stylesheet" href="horario.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">← Volver</a>
+                <a href="registro.html" class="login-btn">Iniciar Sesión</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Logo -->
+    <section class="logo-section">
+        <div class="container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/NjdrTZQv/Whats-App-Image-2025-11-16-at-12-58-11-PM-removebg-preview.png" alt="Logo Mi Local">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Título -->
+    <section class="schedule-title-section">
+        <div class="container">
+            <h1 class="schedule-title">Horarios</h1>
+            <p class="schedule-subtitle">Semanales o diarios</p>
+        </div>
+    </section>
+    
+    <!-- Horarios -->
+    <section class="schedule-container">
+        <div class="container">
+            <div class="schedule-box">
+                <div id="loadingHorarios" class="loading">🔄 Cargando horarios...</div>
+                
+                <!-- Estado actual -->
+                <div class="current-schedule" id="currentSchedule" style="display: none;">
+                    <div class="current-status" id="currentStatus">Abierto ahora</div>
+                    <div class="current-time" id="currentTime">Horario de hoy: 9:00 AM - 8:00 PM</div>
+                </div>
+                
+                <!-- Tabla de horarios -->
+                <table class="schedule-table" id="scheduleTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Día</th>
+                            <th>Horario</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleBody">
+                        <!-- Los horarios se cargarán aquí desde Firebase -->
+                    </tbody>
+                </table>
+                
+                <!-- Notas -->
+                <div class="schedule-notes" id="scheduleNotes" style="display: none;">
+                    <div class="notes-title">📌 Información importante</div>
+                    <div id="notesContent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let horariosData = {};
+        
+        // Cargar horarios al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHorariosFromFirebase();
+        });
+        
+        // CARGAR horarios desde Firebase
+        async function loadHorariosFromFirebase() {
+            try {
+                const db = window.firebaseDB;
+                const { doc, getDoc } = window.firebaseFunctions;
+                
+                const horariosDoc = await getDoc(doc(db, "horarios", "semana"));
+                
+                // Ocultar loading
+                document.getElementById('loadingHorarios').style.display = 'none';
+                
+                if (horariosDoc.exists()) {
+                    horariosData = horariosDoc.data();
+                    mostrarHorarios(horariosData);
+                } else {
+                    // Usar valores por defecto si no hay datos en Firebase
+                    horariosData = {
+                        lunes: '9:00 AM - 8:00 PM',
+                        martes: '9:00 AM - 8:00 PM',
+                        miercoles: '9:00 AM - 8:00 PM',
+                        jueves: '9:00 AM - 8:00 PM',
+                        viernes: '9:00 AM - 9:00 PM',
+                        sabado: '10:00 AM - 6:00 PM',
+                        domingo: 'Cerrado',
+                        notas: 'Horario extendido los viernes hasta las 9:00 PM. Cerramos los domingos para descanso del personal.'
+                    };
+                    mostrarHorarios(horariosData);
+                }
+                
+            } catch (error) {
+                console.error("Error cargando horarios:", error);
+                document.getElementById('loadingHorarios').innerHTML = '❌ Error al cargar horarios';
+                
+                // Mostrar valores por defecto en caso de error
+                horariosData = {
+                    lunes: '9:00 AM - 8:00 PM',
+                    martes: '9:00 AM - 8:00 PM',
+                    miercoles: '9:00 AM - 8:00 PM',
+                    jueves: '9:00 AM - 8:00 PM',
+                    viernes: '9:00 AM - 9:00 PM',
+                    sabado: '10:00 AM - 6:00 PM',
+                    domingo: 'Cerrado',
+                    notas: 'Horario extendido los viernes hasta las 9:00 PM. Cerramos los domingos para descanso del personal.'
+                };
+                mostrarHorarios(horariosData);
+            }
+        }
+        
+        // Mostrar horarios en pantalla
+        function mostrarHorarios(data) {
+            const scheduleBody = document.getElementById('scheduleBody');
+            scheduleBody.innerHTML = '';
+            
+            const days = [
+                { id: 'lunes', name: 'Lunes', key: 'lunes' },
+                { id: 'martes', name: 'Martes', key: 'martes' },
+                { id: 'miercoles', name: 'Miércoles', key: 'miercoles' },
+                { id: 'jueves', name: 'Jueves', key: 'jueves' },
+                { id: 'viernes', name: 'Viernes', key: 'viernes' },
+                { id: 'sabado', name: 'Sábado', key: 'sabado' },
+                { id: 'domingo', name: 'Domingo', key: 'domingo' }
+            ];
+            
+            days.forEach(day => {
+                const row = document.createElement('tr');
+                row.id = day.id;
+                
+                const horario = data[day.key] || 'Cerrado';
+                const isClosed = horario === 'Cerrado';
+                
+                row.innerHTML = `
+                    <td class="day-column">${day.name}</td>
+                    <td class="hours-column ${isClosed ? 'closed-day' : ''}">${horario}</td>
+                `;
+                
+                scheduleBody.appendChild(row);
+            });
+            
+            // Mostrar elementos
+            document.getElementById('currentSchedule').style.display = 'block';
+            document.getElementById('scheduleTable').style.display = 'table';
+            
+            // Mostrar notas si existen
+            if (data.notas) {
+                document.getElementById('notesContent').innerHTML = data.notas.split('\n').map(line => `<p>• ${line}</p>`).join('');
+                document.getElementById('scheduleNotes').style.display = 'block';
+            }
+            
+            // Resaltar día actual y actualizar estado
+            resaltarDiaActual();
+            actualizarEstadoActual(data);
+        }
+        
+        // Resaltar día actual
+        function resaltarDiaActual() {
+            const days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+            const today = new Date().getDay();
+            const todayElement = document.getElementById(days[today]);
+            
+            if (todayElement) {
+                todayElement.classList.add('today');
+            }
+        }
+        
+        // Actualizar estado actual (Abierto/Cerrado)
+        function actualizarEstadoActual(data) {
+            const now = new Date();
+            const currentDay = now.getDay();
+            const days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+            const currentDayKey = days[currentDay];
+            
+            const statusElement = document.getElementById('currentStatus');
+            const timeElement = document.getElementById('currentTime');
+            
+            const horarioHoy = data[currentDayKey] || 'Cerrado';
+            
+            if (horarioHoy === 'Cerrado') {
+                statusElement.textContent = "Cerrado hoy";
+                statusElement.style.color = "#dc3545";
+                timeElement.textContent = "Hoy: Cerrado";
+            } else {
+                statusElement.textContent = "Abierto ahora";
+                statusElement.style.color = "#28a745";
+                timeElement.textContent = `Horario de hoy: ${horarioHoy}`;
+            }
+        }
+        
+        // Recargar horarios cada 30 segundos (opcional)
+        setInterval(() => {
+            loadHorariosFromFirebase();
+        }, 30000);
+    </script>
+    <footer style="
+    background: #5C0667;
+    color: #dfe6e9;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  ">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+        
+        <!-- Encabezado del Footer -->
+        <div style="margin-bottom: 25px;">
+            <h2 style="color: #e17055; margin: 0 0 10px 0; font-size: 32px;">
+                JULISALO
+            </h2>
+            <p style="margin: 0; font-size: 18px; color: #81ecec;">
+                Más Cerca de Tí 🛍️
+            </p>
+        </div>
+  
+        <!-- Información en columnas -->
+        <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin: 30px 0;">
+            <div style="text-align: left;">
+                <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📍 Nuestro Local</h4>
+                <p style="margin: 5px 0;">✅ Productos de calidad</p>
+                <p style="margin: 5px 0;">✅ Atención personalizada</p>
+                <p style="margin: 5px 0;">✅ Precios competitivos</p>
+            </div>
+            
+            <div style="text-align: left;">
+                <h4 style="color: #fd79a8; margin: 0 0 15px 0;">📞 Contáctanos</h4>
+                <p style="margin: 5px 0;">🏪 Visítanos cuando puedas</p>
+                <p style="margin: 5px 0;">⭐ Cientos de Clientes Felices</p>
+            </div>
+        </div>
+        <!-- Copyright -->
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Local Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con facilidad
+            </p>
+        </div>
+    </div>
+  </footer>
+</body>
+</html>

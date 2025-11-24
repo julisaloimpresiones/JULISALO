@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #5C0667;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: #500759;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.back-btn {
+    background-color: #4a6cf7;
+    color: #fff;
+    border: 1px solid #4a6cf7;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background-color: #4a6cf7;
+    color: white;
+}
+
+.login-btn {
+    background-color: #500759;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #3a5ce5;
+}
+
+/* Logo */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 20px;
+}
+
+/* Título */
+.schedule-title {
+    text-align: center;
+    margin: 30px 0;
+    color: #ffff;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.schedule-subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ffff;
+    font-size: 18px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de horarios */
+.schedule-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 60px;
+}
+
+.schedule-box {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Tabla de horarios */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule-table th {
+    background-color: #4a6cf7;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.schedule-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.day-column {
+    font-weight: 600;
+    color: #333;
+    width: 120px;
+}
+
+.hours-column {
+    color: #666;
+}
+
+.today {
+    background-color: #e7f1ff !important;
+    border-left: 4px solid #4a6cf7;
+}
+
+/* Horario actual */
+.current-schedule {
+    background-color: #e7f1ff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.current-status {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4a6cf7;
+    margin-bottom: 10px;
+}
+
+.current-time {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Notas */
+.schedule-notes {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff3cd;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.notes-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #856404;
+}
+
+/* Footer */
+footer {
+    background-color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .schedule-box {
+        padding: 30px 25px;
+        margin: 0 15px;
+    }
+    
+    .logo {
+        width: 120px;
+        height: 120px;
+        font-size: 16px;
+    }
+    
+    .schedule-title {
+        font-size: 28px;
+    }
+    
+    .schedule-table {
+        font-size: 14px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 12px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .schedule-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

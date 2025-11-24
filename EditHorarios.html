@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Horarios - JULISALO</title>
+    
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+            authDomain: "julisalo.firebaseapp.com",
+            projectId: "julisalo",
+            storageBucket: "julisalo.firebasestorage.app",
+            messagingSenderId: "770420740812",
+            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+            measurementId: "G-BT8MHDK807"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.firebaseDB = db;
+        window.firebaseFunctions = { doc, getDoc, setDoc };
+    </script>
+    <link rel="stylesheet" href="EditHoriarios.css">
+</head>
+<body>
+    <!-- Notificación -->
+    <div class="notification" id="notification">
+        ¡Horarios guardados exitosamente!
+    </div>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="admin.html" class="back-btn">← Volver al Panel</a>
+                <div class="admin-badge">Editando Horarios</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Título -->
+    <section>
+        <div class="container">
+            <h1 class="page-title">Gestión de Horarios</h1>
+            <p class="page-subtitle">Modifica los horarios de atención de tu local</p>
+        </div>
+    </section>
+    
+    <!-- Formulario de horarios -->
+    <section class="schedule-container">
+        <div class="container">
+            <div class="schedule-box">
+                <!-- Tabla de horarios -->
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Día</th>
+                            <th>Horario de Atención</th>
+                            <th style="width: 120px;">Cerrado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="day-column">Lunes</td>
+                            <td>
+                                <input type="text" class="hours-input" id="lunesHorario" placeholder="Ej: 9:00 AM - 8:00 PM" value="9:00 AM - 8:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="lunesCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Martes</td>
+                            <td>
+                                <input type="text" class="hours-input" id="martesHorario" placeholder="Ej: 9:00 AM - 8:00 PM" value="9:00 AM - 8:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="martesCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Miércoles</td>
+                            <td>
+                                <input type="text" class="hours-input" id="miercolesHorario" placeholder="Ej: 9:00 AM - 8:00 PM" value="9:00 AM - 8:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="miercolesCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Jueves</td>
+                            <td>
+                                <input type="text" class="hours-input" id="juevesHorario" placeholder="Ej: 9:00 AM - 8:00 PM" value="9:00 AM - 8:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="juevesCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Viernes</td>
+                            <td>
+                                <input type="text" class="hours-input" id="viernesHorario" placeholder="Ej: 9:00 AM - 9:00 PM" value="9:00 AM - 9:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="viernesCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Sábado</td>
+                            <td>
+                                <input type="text" class="hours-input" id="sabadoHorario" placeholder="Ej: 10:00 AM - 6:00 PM" value="10:00 AM - 6:00 PM">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="sabadoCerrado">
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="day-column">Domingo</td>
+                            <td>
+                                <input type="text" class="hours-input" id="domingoHorario" placeholder="Ej: Cerrado" value="Cerrado">
+                            </td>
+                            <td>
+                                <input type="checkbox" class="closed-checkbox" id="domingoCerrado" checked>
+                                <label class="closed-label">Cerrado</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Notas adicionales -->
+                <div class="notes-section">
+                    <div class="notes-title">📌 Notas Adicionales</div>
+                    <textarea class="notes-textarea" id="notasHorarios" placeholder="Ej: Horario extendido los viernes, cerramos los días festivos, etc...">Horario extendido los viernes hasta las 9:00 PM. Cerramos los domingos para descanso del personal.</textarea>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button class="btn-cancel" onclick="cancelChanges()">Cancelar</button>
+                    <button class="btn-save" onclick="saveHorarios()">Guardar Horarios</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #636e72;">
+            <p style="margin: 0; font-size: 14px;">
+                <strong>Julisalo</strong> • Desarrollado por <strong style="color: #E1306C;"> IG: @T4po.0</strong>
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #b2bec3;">
+                &copy; 2025 - Sencillez con Facilidad
+            </p>
+        </div>
+    </div>
+    </footer>
+
+    <script src="EditHorarios.js"></script>
+</body>
+</html>

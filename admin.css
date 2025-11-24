@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #5C0667;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: #500759;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+/* ===== ESTILOS DE PEDIDOS EN ADMIN ===== */
+.orders-notification {
+    position: relative;
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #5C0667;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.orders-notification:hover {
+    background: #4a0554;
+}
+
+.orders-modal {
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-time {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.order-products {
+    margin-bottom: 10px;
+}
+
+.order-products div {
+    padding: 2px 0;
+}
+
+.order-details {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-complete, .btn-invoice {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-complete {
+    background: #28a745;
+    color: white;
+}
+
+.btn-complete:hover {
+    background: #218838;
+}
+
+.btn-invoice {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-invoice:hover {
+    background: #138496;
+}
+
+.back-btn {
+    background-color: #500759;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background-color: #4a6cf7;
+    color: white;
+}
+
+.admin-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+/* Logo */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 20px;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Título */
+.admin-title {
+    text-align: center;
+    margin: 20px 0 40px;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.admin-subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ffff;
+    font-size: 18px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Botones de administración */
+.admin-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px 0 60px;
+}
+
+.admin-btn {
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+.admin-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background-color: #4a6cf7;
+    color: white;
+}
+
+.btn-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.btn-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.btn-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.admin-btn:hover .btn-description {
+    color: white;
+}
+
+.edit-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #4a6cf7;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    background-color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-buttons {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .logo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .admin-title {
+        font-size: 28px;
+    }
+}
