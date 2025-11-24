@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadProductsFromFirebase() {
     try {
         const db = window.firebaseDB;
-        const querySnapshot = await window.firebaseGetDocs(window.firebaseCollection(db, "productos"));
+        const { collection, getDocs } = window.firebaseFunctions;
+        
+        const querySnapshot = await getDocs(collection(db, "productos"));
         const products = [];
         
         querySnapshot.forEach((doc) => {
@@ -100,17 +102,19 @@ function isValidUrl(string) {
 async function editProduct(id) {
     try {
         const db = window.firebaseDB;
-        const productDoc = await window.firebaseGetDoc(window.firebaseDoc(db, "productos", id));
+        const { doc, getDoc } = window.firebaseFunctions;
+        
+        const productDoc = await getDoc(doc(db, "productos", id));
         
         if (productDoc.exists()) {
             const product = productDoc.data();
             editingProductId = id;
             
             document.getElementById('modalTitle').textContent = 'Editar Producto';
-            document.getElementById('productName').value = product.nombre || '';
-            document.getElementById('productDescription').value = product.descripcion || '';
-            document.getElementById('productPrice').value = product.precio || '';
-            document.getElementById('productStock').value = product.stock || '';
+            document.getElementById('productName').value = product.nombre;
+            document.getElementById('productDescription').value = product.descripcion;
+            document.getElementById('productPrice').value = product.precio;
+            document.getElementById('productStock').value = product.stock;
             document.getElementById('productCategory').value = product.categoria || '';
             document.getElementById('imageUrl').value = product.imagen || '';
             
@@ -133,7 +137,9 @@ async function deleteProduct(id) {
     if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
         try {
             const db = window.firebaseDB;
-            await window.firebaseDeleteDoc(window.firebaseDoc(db, "productos", id));
+            const { doc, deleteDoc } = window.firebaseFunctions;
+            
+            await deleteDoc(doc(db, "productos", id));
             await loadProductsFromFirebase();
             alert("Producto eliminado correctamente");
         } catch (error) {
@@ -159,6 +165,7 @@ async function saveProduct() {
     
     try {
         const db = window.firebaseDB;
+        const { collection, addDoc, doc, updateDoc } = window.firebaseFunctions;
         
         const productData = {
             nombre: nombre,
@@ -172,10 +179,10 @@ async function saveProduct() {
         
         if (editingProductId) {
             // Actualizar producto existente
-            await window.firebaseUpdateDoc(window.firebaseDoc(db, "productos", editingProductId), productData);
+            await updateDoc(doc(db, "productos", editingProductId), productData);
         } else {
             // Agregar nuevo producto
-            await window.firebaseAddDoc(window.firebaseCollection(db, "productos"), productData);
+            await addDoc(collection(db, "productos"), productData);
         }
         
         await loadProductsFromFirebase();
