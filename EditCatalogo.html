@@ -6,26 +6,26 @@
     <title>Editar Catálogo - JULISALO</title>
     
     <!-- FIREBASE -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
-            authDomain: "julisalo.firebaseapp.com",
-            projectId: "julisalo",
-            storageBucket: "julisalo.firebasestorage.app",
-            messagingSenderId: "770420740812",
-            appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
-            measurementId: "G-BT8MHDK807"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyBG47Tct5Xc5mUTtF8jfnV-PTi1M6AEBE4",
+        authDomain: "julisalo.firebaseapp.com",
+        projectId: "julisalo",
+        storageBucket: "julisalo.firebasestorage.app",
+        messagingSenderId: "770420740812",
+        appId: "1:770420740812:web:eaf66a57744e8a0ae2e869",
+        measurementId: "G-BT8MHDK807"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        
-        window.firebaseDB = db;
-        window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc };
-    </script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    window.firebaseDB = db;
+    window.firebaseFunctions = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc };
+</script>
     <link rel="stylesheet" href="EditCatalogo.css">
 
 </head>
@@ -144,4 +144,5 @@
     </div>
     </footer>
 </body>
+
 </html>
