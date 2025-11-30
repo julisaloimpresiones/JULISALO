@@ -349,6 +349,14 @@ header {
     border-color: #4a6cf7;
 }
 
+.palpitacion {
+    transition: transform 0.3s ease-in-out;
+}
+
+.palpitacion:hover {
+    transform: scale(1.05);
+    /* Aumenta un 5% el tamaño */
+}
 /* Footer */
 footer {
     background-color: #fff;
@@ -384,4 +392,5 @@ footer {
     .products-grid {
         grid-template-columns: 1fr;
     }
+
 }
