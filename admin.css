@@ -16,6 +16,14 @@ body {
     margin: 0 auto;
     padding: 0 20px;
 }
+.palpitacion {
+    transition: transform 0.3s ease-in-out;
+}
+
+.palpitacion:hover {
+    transform: scale(1.05);
+    /* Aumenta un 5% el tamaño */
+}
 
 /* Header */
 header {
@@ -283,4 +291,5 @@ footer {
     .admin-title {
         font-size: 28px;
     }
+
 }
