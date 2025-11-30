@@ -47,6 +47,14 @@ header {
     transition: all 0.3s;
     text-decoration: none;
 }
+.palpitacion {
+    transition: transform 0.3s ease-in-out;
+}
+
+.palpitacion:hover {
+    transform: scale(1.05);
+    /* Aumenta un 5% el tamaño */
+}
 
 .back-btn:hover {
     background-color: #3a5ce5;
@@ -243,4 +251,5 @@ footer {
     .admin-options {
         grid-template-columns: 1fr;
     }
+
 }
