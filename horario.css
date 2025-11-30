@@ -10,6 +10,14 @@ body {
     color: #333;
     line-height: 1.6;
 }
+.palpitacion {
+    transition: transform 0.3s ease-in-out;
+}
+
+.palpitacion:hover {
+    transform: scale(1.05);
+    /* Aumenta un 5% el tamaño */
+}
 
 .container {
     max-width: 1200px;
@@ -222,4 +230,5 @@ footer {
         display: block;
         overflow-x: auto;
     }
+
 }
