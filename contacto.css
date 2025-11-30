@@ -49,7 +49,14 @@ header {
     background-color: #4a6cf7;
     color: white;
 }
+.palpitacion {
+    transition: transform 0.3s ease-in-out;
+}
 
+.palpitacion:hover {
+    transform: scale(1.05);
+    /* Aumenta un 5% el tamaño */
+}
 .login-btn {
     background-color: #500759;
     color: white;
@@ -234,4 +241,5 @@ footer {
         margin-right: 0;
         margin-bottom: 15px;
     }
+
 }
