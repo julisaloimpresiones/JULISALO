@@ -52,9 +52,15 @@
     <section>
         <div class="container">
             <div class="controls">
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
-                </div>
+<div class="search-box" style="position: relative; width: 100%; max-width: 400px;">
+    <input type="text" class="search-input" placeholder="🔍 Buscar por nombre, descripción o precio..." 
+           id="searchInput" style="width: 100%; padding: 10px 40px 10px 15px;">
+    <button onclick="clearSearch()" 
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); 
+                   background: none; border: none; cursor: pointer; color: #5C0667; font-size: 18px;">
+        ✕
+    </button>
+</div>
                 <button class="add-product-btn" onclick="openAddModal()">+ Agregar Producto</button>
             </div>
         </div>
@@ -146,6 +152,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
