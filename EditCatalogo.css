@@ -46,6 +46,42 @@ header {
     color: white;
 }
 
+/* Estilos para la búsqueda */
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-input {
+    border: 2px solid #5C0667;
+    border-radius: 25px;
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(92, 6, 103, 0.3);
+    border-color: #4a0554;
+}
+
+/* Estilos para productos cuando se buscan */
+.product-card[style*="display: none"] {
+    display: none !important;
+}
+
+/* Mensaje de no resultados */
+.no-results-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 20px;
+}
 .admin-badge {
     background-color: #28a745;
     color: white;
@@ -329,3 +365,4 @@ header {
         max-width: none;
     }
 }
+
