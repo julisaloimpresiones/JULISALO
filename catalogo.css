@@ -273,11 +273,9 @@ header {
 .product-card {
     background-color: white;
     border-radius: 12px;
-    overflow: hidden;
+    padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
 }
 
 .product-card:hover {
@@ -402,4 +400,5 @@ footer {
     }
 
 }
+
 
